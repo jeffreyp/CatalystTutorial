@@ -1,0 +1,18 @@
+[% # This is a TT comment. -%]
+
+[% META title = 'Book List' -%]
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Rating</th>
+    <th>Author(s)</th>
+  </tr>
+  [% FOREACH book IN books -%]
+  <tr>
+    <td>[% book.title %]</td>
+    <td>[% book.rating %]</td>
+    <td></td>
+  </tr>
+  [% END -%]
+</table>
