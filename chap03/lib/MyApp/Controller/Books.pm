@@ -36,7 +36,7 @@ Fetch all books and stash in books/list.tt2.
 sub list :Local {
     my ( $self, $c ) = @_;
 
-    $c->stash(books => '');
+    $c->stash(books => [$c->model('DB::Book')->all]);
     $c->stash(template => 'books/list.tt2');
 }
 
