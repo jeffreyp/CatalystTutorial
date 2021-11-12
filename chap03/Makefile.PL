@@ -13,6 +13,7 @@ all_from 'lib/MyApp.pm';
 requires 'Catalyst::Runtime' => '5.90128';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
+requires 'Catalyst::Plugin::StackTrace';
 requires 'Catalyst::Action::RenderView';
 requires 'Moose';
 requires 'namespace::autoclean';
