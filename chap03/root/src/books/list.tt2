@@ -7,6 +7,7 @@
     <th>Title</th>
     <th>Rating</th>
     <th>Author(s)</th>
+    <th>Links</th>
   </tr>
   [% FOREACH book IN books -%]
   <tr>
@@ -16,6 +17,9 @@
       [% tt_authors = []; tt_authors.push(author.last_name) FOREACH author = book.authors %]
       ([% tt_authors.size | html %])
       [% tt_authors.join(', ') | html %]
+    </td>
+    <td>
+	<a href="[% c.uri_for(c.controller.action_for('delete'), [book.id]) %]">Delete</a>
     </td>
   </tr>
   [% END -%]

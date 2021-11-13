@@ -107,6 +107,36 @@ sub form_create_do :Chained('base') :PathPart('form_create_do') :Args(0) {
     $c->stash(book => $book, template => 'books/create_done.tt2');
 }
 
+=head2 object
+
+Fetch the specified book object based on book ID and store in stash.
+
+=cut
+
+sub object :Chained('base') :PathPart('id') :CaptureArgs(1) {
+    my ( $self, $c, $id ) = @_;
+
+    $c->stash(object => $c->stash->{resultset}->find($id));
+    die "Book $id not found!" if !$c->stash->{object};
+
+    $c->log->debug("***INSIDE OBJECT METHOD FOR obj id=$id***");
+}
+
+=head2 delete
+
+Delete a book.
+
+=cut
+
+sub delete :Chained('object') :PathPart('delete') :Args(0) {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{object}->delete;
+    $c->stash->{status_msg} = "Book deleted.";
+    $c->response->redirect($c->uri_for($self->action_for('list'),
+			   {status_msg=>"Book deleted."}));
+}
+
 =encoding utf8
 
 =head1 AUTHOR
