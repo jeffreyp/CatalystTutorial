@@ -46,7 +46,7 @@ Create a book with the specified title, rating, author.
 
 =cut
 
-sub url_create :Local {
+sub url_create :Chained('base') :PathPart('url_create') :Args(3) {
     my ( $self, $c, $title, $rating, $author_id ) = @_;
 
     my $book = $c->model('DB::Book')->create({
@@ -58,6 +58,19 @@ sub url_create :Local {
 
     $c->stash(book => $book, template => 'books/create_done.tt2');
     $c->response->header('Cache-Control' => 'no-cache');
+}
+
+=head2 base
+ 
+Put common logic to start chained dispatch here.
+
+=cut
+
+sub base :Chained('/') :PathPart('books') :CaptureArgs(0) {
+    my ( $self, $c ) = @_;
+
+    $c->stash(resultset => $c->model('DB::Book'));
+    $c->log->debug('***INSIDE BASE METHOD***');
 }
 
 =encoding utf8
