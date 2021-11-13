@@ -40,6 +40,26 @@ sub list :Local {
     $c->stash(template => 'books/list.tt2');
 }
 
+=head2 url_create
+
+Create a book with the specified title, rating, author.
+
+=cut
+
+sub url_create :Local {
+    my ( $self, $c, $title, $rating, $author_id ) = @_;
+
+    my $book = $c->model('DB::Book')->create({
+	title => $title,
+	rating => $rating
+					     });
+
+    $book->add_to_book_authors({author_id => $author_id});
+
+    $c->stash(book => $book, template => 'books/create_done.tt2');
+    $c->response->header('Cache-Control' => 'no-cache');
+}
+
 =encoding utf8
 
 =head1 AUTHOR

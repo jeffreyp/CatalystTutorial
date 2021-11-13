@@ -1,0 +1,14 @@
+[% USE Dumper(Indent=1) -%]
+
+[% META title = 'Book Created' %]
+
+<p>Added book '[% book.title %]'
+by '[% book.authors.first.last_name %]'
+with rating [% book.rating %].</p>
+
+<p><a href="[% c.uri_for('/books/list') %]">Return to list</a></p>
+
+<pre>
+Dump of 'book' variable:
+[% Dumper.dump(book) %]
+</pre>
