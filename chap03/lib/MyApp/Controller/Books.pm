@@ -73,6 +73,40 @@ sub base :Chained('/') :PathPart('books') :CaptureArgs(0) {
     $c->log->debug('***INSIDE BASE METHOD***');
 }
 
+=head2 form_create
+
+Display a form to create a book.
+
+=cut
+
+sub form_create :Chained('base') :PathPart('form_create') :Args(0) {
+    my ( $self, $c ) = @_;
+
+    $c->stash(template => 'books/form_create.tt2');
+}
+
+=head2 form_create_do
+
+Take info from the form and add to DB.
+
+=cut
+
+sub form_create_do :Chained('base') :PathPart('form_create_do') :Args(0) {
+    my ( $self, $c ) = @_;
+
+    my $title = $c->request->params->{title} || 'N/A';
+    my $rating = $c->request->params->{rating} || 'N/A';
+    my $author_id = $c->request->params->{author_id} || '1';
+
+    my $book = $c->model('DB::Book')->create({
+	title => $title,
+	rating => $rating,
+					     });
+    $book->add_to_book_authors({author_id => $author_id});
+
+    $c->stash(book => $book, template => 'books/create_done.tt2');
+}
+
 =encoding utf8
 
 =head1 AUTHOR
