@@ -26,11 +26,13 @@ extends 'DBIx::Class::Core';
 
 =item * L<DBIx::Class::TimeStamp>
 
+=item * L<DBIx::Class::PassphraseColumn>
+
 =back
 
 =cut
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "PassphraseColumn");
 
 =head1 TABLE: C<author>
 
@@ -107,8 +109,8 @@ Composing rels: L</book_authors> -> book
 __PACKAGE__->many_to_many("books", "book_authors", "book");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-11-13 18:19:33
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:KOHiYR6ZZKs1WO4bLWlrIQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-11-14 13:01:45
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hmwptWK/4W2II2DTc1WZjQ
 
 #
 # Row-level helper methods
