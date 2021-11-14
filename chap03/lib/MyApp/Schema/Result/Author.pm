@@ -24,11 +24,13 @@ extends 'DBIx::Class::Core';
 
 =item * L<DBIx::Class::InflateColumn::DateTime>
 
+=item * L<DBIx::Class::TimeStamp>
+
 =back
 
 =cut
 
-__PACKAGE__->load_components("InflateColumn::DateTime");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
 
 =head1 TABLE: C<author>
 
@@ -105,8 +107,17 @@ Composing rels: L</book_authors> -> book
 __PACKAGE__->many_to_many("books", "book_authors", "book");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-11-12 14:27:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Iz0cfMVzEBI1JJiIj+xraw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-11-13 18:19:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:KOHiYR6ZZKs1WO4bLWlrIQ
+
+#
+# Row-level helper methods
+#
+sub full_name {
+    my ($self) = @_;
+
+    return $self->first_name . ' ' . $self->last_name;
+}
 
 __PACKAGE__->many_to_many( books => 'book_authors', 'book' );
 

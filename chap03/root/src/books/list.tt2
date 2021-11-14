@@ -13,11 +13,7 @@
   <tr>
     <td>[% book.title %]</td>
     <td>[% book.rating %]</td>
-    <td>
-      [% tt_authors = []; tt_authors.push(author.last_name) FOREACH author = book.authors %]
-      ([% tt_authors.size | html %])
-      [% tt_authors.join(', ') | html %]
-    </td>
+    <td>([% book.author_count | html %]) [% book.author_list | html %]</td>
     <td>
 	<a href="[% c.uri_for(c.controller.action_for('delete'), [book.id]) %]">Delete</a>
     </td>

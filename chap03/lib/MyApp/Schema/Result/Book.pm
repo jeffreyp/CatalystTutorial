@@ -24,11 +24,13 @@ extends 'DBIx::Class::Core';
 
 =item * L<DBIx::Class::InflateColumn::DateTime>
 
+=item * L<DBIx::Class::TimeStamp>
+
 =back
 
 =cut
 
-__PACKAGE__->load_components("InflateColumn::DateTime");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
 
 =head1 TABLE: C<book>
 
@@ -54,6 +56,16 @@ __PACKAGE__->table("book");
   data_type: 'integer'
   is_nullable: 1
 
+=head2 created
+
+  data_type: 'timestamp'
+  is_nullable: 1
+
+=head2 updated
+
+  data_type: 'timestamp'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -63,6 +75,10 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 1 },
   "rating",
   { data_type => "integer", is_nullable => 1 },
+  "created",
+  { data_type => "timestamp", is_nullable => 1 },
+  "updated",
+  { data_type => "timestamp", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -105,10 +121,46 @@ Composing rels: L</book_authors> -> author
 __PACKAGE__->many_to_many("authors", "book_authors", "author");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-11-12 14:27:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XQq78pL/ojDKFT1vvTis5w
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-11-13 18:19:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cafuoDTo9yz0j7zGotyB0Q
+
+__PACKAGE__->add_columns(
+    "created", { data_type => 'timestamp', set_on_create => 1 },
+    "updated", { data_type => 'timestamp', set_on_create => 1, set_on_update => 1 },
+    );
 
 __PACKAGE__->many_to_many( authors => 'book_authors', 'author' );
 
 __PACKAGE__->meta->make_immutable;
+
+=head2 author_count
+
+Return the number of authors for the current book.
+
+=cut
+
+sub author_count {
+    my ($self) = @_;
+
+    return $self->authors->count;
+}
+
+=head2 author_list
+
+Return a comma-separated list of authors for the current book.
+
+=cut
+
+sub author_list {
+    my ($self) = @_;
+
+    my @names;
+    for my $author ($self->authors) {
+	push(@names, $author->full_name);
+    }
+
+    return join(', ', @names);
+}
+	
+
 1;
