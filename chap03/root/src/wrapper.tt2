@@ -22,7 +22,7 @@
 	  </ul>
 	</div><!-- end menu -->
 	<div id="content">
-	  <span class="message">[% status_msg || c.flash.status_msg %]</span>
+	  <span class="message">[% status_msg %]</span>
 	  <span class="error">[% error_msg %]</span>
 	  [% content %]
 	</div><!-- end content -->

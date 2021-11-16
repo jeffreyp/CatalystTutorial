@@ -25,6 +25,7 @@ use Catalyst qw/
     Session
     Session::Store::File
     Session::State::Cookie
+    StatusMessage
 /;
 
 extends 'Catalyst';

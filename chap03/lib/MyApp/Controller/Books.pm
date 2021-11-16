@@ -33,7 +33,7 @@ Fetch all books and stash in books/list.tt2.
 
 =cut
 
-sub list :Local {
+sub list :Chained('base') :PathPart('list') :Args(0) {
     my ( $self, $c ) = @_;
 
     $c->stash(books => [$c->model('DB::Book')->all]);
@@ -71,6 +71,8 @@ sub base :Chained('/') :PathPart('books') :CaptureArgs(0) {
 
     $c->stash(resultset => $c->model('DB::Book'));
     $c->log->debug('***INSIDE BASE METHOD***');
+
+    $c->load_status_msgs;
 }
 
 =head2 form_create
@@ -131,9 +133,12 @@ Delete a book.
 sub delete :Chained('object') :PathPart('delete') :Args(0) {
     my ( $self, $c ) = @_;
 
+    my $id = $c->stash->{object}->id;
+
     $c->stash->{object}->delete;
-    $c->flash->{status_msg} = "Book deleted.";
-    $c->response->redirect($c->uri_for($self->action_for('list')));
+
+    $c->response->redirect($c->uri_for($self->action_for('list'),
+				       {mid => $c->set_status_msg("Deleted book $id.")}));
 }
 
 =head2 list_recent
