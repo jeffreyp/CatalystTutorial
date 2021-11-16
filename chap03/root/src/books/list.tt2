@@ -24,3 +24,19 @@
     <a href="[% c.uri_for('/login') %]">Login</a>
     <a href="[% c.uri_for(c.controller.action_for('form_create')) %]">Create</a>
 </p>
+<p>Hello, [% c.user.username %], you have the following roles:</p>
+
+<p>
+<ul>
+  [% FOR role = c.user.roles %]<li>[% role %]</li>[% END %]
+</ul>
+
+[% IF c.check_user_roles('user') %]
+  <a href="[% c.uri_for('/logout') %]">User Logout</a>
+[% END %]
+
+[% IF c.check_user_roles('admin') %]
+  <a href="[% c.uri_for(c.controller.action_for('form_create')) %]">Admin Create</a>
+[% END %]
+
+</p>

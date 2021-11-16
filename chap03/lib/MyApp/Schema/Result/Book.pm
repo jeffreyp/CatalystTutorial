@@ -163,6 +163,17 @@ sub author_list {
 
     return join(', ', @names);
 }
-	
+
+=head2 delete_allowed_by
+
+Can the specified user delete the selected book?
+
+=cut
+
+sub delete_allowed_by {
+    my ($self, $user) = @_;
+
+    return $user->has_role('admin');
+}
 
 1;

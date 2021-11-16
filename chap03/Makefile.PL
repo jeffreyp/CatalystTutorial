@@ -11,6 +11,7 @@ name 'MyApp';
 all_from 'lib/MyApp.pm';
 
 requires 'Catalyst::Runtime' => '5.90128';
+requires 'Catalyst::Plugin::Authorization::Roles';
 requires 'Catalyst::Plugin::Authentication';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Session';
@@ -23,7 +24,8 @@ requires 'Catalyst::Action::RenderView';
 requires 'Moose';
 requires 'namespace::autoclean';
 requires 'Config::General'; # This should reflect the config file format you've chosen
-                 # See Catalyst::Plugin::ConfigLoader for supported formats
+# See Catalyst::Plugin::ConfigLoader for supported formats
+requires 'Perl6::Junction';
 test_requires 'Test::More' => '0.88';
 catalyst;
 
