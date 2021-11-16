@@ -132,9 +132,8 @@ sub delete :Chained('object') :PathPart('delete') :Args(0) {
     my ( $self, $c ) = @_;
 
     $c->stash->{object}->delete;
-    $c->stash->{status_msg} = "Book deleted.";
-    $c->response->redirect($c->uri_for($self->action_for('list'),
-			   {status_msg=>"Book deleted."}));
+    $c->flash->{status_msg} = "Book deleted.";
+    $c->response->redirect($c->uri_for($self->action_for('list')));
 }
 
 =head2 list_recent
